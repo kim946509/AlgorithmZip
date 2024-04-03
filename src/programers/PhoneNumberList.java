@@ -18,6 +18,7 @@ public class PhoneNumberList {
                 if(phone_book[i].equals(sub))
                     return false;
             }
+
         }
 
         return true;
