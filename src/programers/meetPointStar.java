@@ -71,21 +71,6 @@ public class meetPointStar {
         for(int i = 0; i<board.length;i++)
             board[i]=new String(arr[i]);
 
-
-//        String[] board=new String[(int)height];
-//        int cur = 0;
-//        for(long i = maxY;i>=minY;i--){
-//            StringBuilder stringBuilder = new StringBuilder();
-//            for(long j = minX;j<=maxX;j++){
-//                if(containsPoint(meetPoints, j,i))
-//                    stringBuilder.append('*');
-//                else
-//                    stringBuilder.append('.');
-//            }
-//            board[cur] = stringBuilder.toString();
-//            cur++;
-//        }
-
         return board;
     }
     //해당 점이 containsPoint에 존재하는지 확인
