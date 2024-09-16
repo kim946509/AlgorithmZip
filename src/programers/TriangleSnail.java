@@ -15,6 +15,8 @@ package programers;
  */
 
 public class TriangleSnail {
+    private static final int[] dx = {0,1,-1};
+    private static final int[] dy = {1,0,-1};
 
     public static void main(String[] args) {
         int n = 5;
@@ -30,37 +32,23 @@ public class TriangleSnail {
         int num=1;
         int x=0;
         int y=0;
+        int direction = 0;
 
         while(true){
-
-            //아래로 이동
-            while(true){
-                triangle[y][x]=num;
+            while(true) {
+                triangle[y][x] = num;
                 num++;
-                if(y+1==n || triangle[y+1][x]!=0) break;
-                y++;
+                if (x + dx[direction] == n || y + dy[direction] == n || triangle[y + dy[direction]][x + dx[direction]] != 0)
+                    break;
+                x+=dx[direction];
+                y+=dy[direction];
             }
-            if(x+1 == n || triangle[y][x+1]!=0) break;
-            x++;
-            //오른쪽으로 이동
-            while(true){
-                triangle[y][x]=num;
-                num++;
-                if(x+1==n || triangle[y][x+1]!=0) break;
-                x++;
-            }
-            if(triangle[y-1][x-1]!=0) break;
-            x-=1;
-            y-=1;
-            while (true){
-                triangle[y][x]=num;
-                num++;
-                if(triangle[y-1][x-1]!=0) break;
-                x-=1;
-                y-=1;
-            }
-            if (y+1==n || triangle[y+1][x]!=0) break;
-            y++;
+            direction++;
+            if(direction==3)
+                direction=0;
+            if(x + dx[direction] == n || y + dy[direction] == n || triangle[y + dy[direction]][x + dx[direction]] != 0) break;
+            x+=dx[direction];
+            y+=dy[direction];
         }
         int[] answer = new int[num-1];
         int index = 0;
