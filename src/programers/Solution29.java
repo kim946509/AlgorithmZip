@@ -14,30 +14,35 @@ public class Solution29 {
             sortedOrders[i] = new String(chars);
         }
 
-        for(int r : course) {
+        for(int courseSize : course) {
             Map<String, Integer> combinationCountMap = new HashMap<>();
             int maxCount = 0;
 
             // 각 주문별로 조합 생성 및 등장 횟수 계산
             for(String order : sortedOrders) {
                 List<String> combinations = new ArrayList<>();
-                getAllCombination(order, new StringBuilder(), 0, r, combinations);
+                getAllCombination(order, new StringBuilder(), 0, courseSize, combinations);
 
                 for(String comb : combinations) {
-                    combinationCountMap.put(comb, combinationCountMap.getOrDefault(comb, 0) + 1);
+                    if(combinationCountMap.containsKey(comb)){
+                        combinationCountMap.put(comb, combinationCountMap.get(comb) + 1);
+                    }
+                    else
+                        combinationCountMap.put(comb, 1);
+
                     maxCount = Math.max(maxCount, combinationCountMap.get(comb));
                 }
             }
 
-            // 최대 등장 횟수가 2 이상인 조합 선택
-            List<String> tempList = new ArrayList<>();
-            for(Map.Entry<String, Integer> entry : combinationCountMap.entrySet()) {
-                if(entry.getValue() == maxCount && maxCount >= 2) {
-                    tempList.add(entry.getKey());
+            // 최대 등장 횟수가 2 이상이고 maxCount(가장 많은 주문)와 같은 조합을 선택
+            List<String> courceList = new ArrayList<>();
+            Set<String> combinations = combinationCountMap.keySet();
+            for(String comb : combinations){
+                if(combinationCountMap.get(comb) == maxCount && maxCount >= 2){
+                    courceList.add(comb);
                 }
             }
-
-            answerList.addAll(tempList);
+            answerList.addAll(courceList);
         }
 
         // 결과를 사전순으로 정렬
@@ -49,7 +54,7 @@ public class Solution29 {
         return answer;
     }
 
-    // 모든 조합 생성
+    // 모든 조합 생성. 백트래킹을 이용하여 조합 생성
     private void getAllCombination(String order, StringBuilder comb, int start, int r, List<String> combinations) {
         if(comb.length() == r) {
             combinations.add(comb.toString());
