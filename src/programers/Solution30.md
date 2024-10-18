@@ -45,7 +45,7 @@ backend 직군을 선택했고, senior 경력이면서 코딩테스트 점수를
 - 직군은 backend, frontend, - 중 하나입니다.
 - 경력은 junior, senior, - 중 하나입니다.
 - 소울푸드는 chicken, pizza, - 중 하나입니다.
-- '-' 표시는 해당 조건을 고려하지 않겠다는 의미입니다.
+- '-' 표시는 해당 조건을 고려하지 않겠다는 의미입니다.l
 - X는 코딩테스트 점수를 의미하며 조건을 만족하는 사람 중 X점 이상 받은 사람은 모두 몇 명인 지를 의미합니다.
 - 각 단어는 공백문자(스페이스 바) 하나로 구분되어 있습니다.
 - 예를 들면, "cpp and - and senior and pizza 500"은 "cpp로 코딩테스트를 봤으며, 경력은 senior 이면서 소울푸드로 pizza를 선택한 지원자 중 코딩테스트 점수를 500점 이상 받은 사람은 모두 몇 명인가?"를 의미합니다.
@@ -57,7 +57,7 @@ query = ["java and backend and junior and pizza 100","python and frontend and se
 return = [1,1,1,1,2,4]
 ---
 
-# Approach 1 ⭕
+# Approach 1 ❌
 조건을 만족하는 사람을 찾아야 한다.\
 
 1. info 배열을 순회하며 String을 분리한다.
@@ -75,14 +75,23 @@ info의 길이 n + query의 길이 m * O(nlogn)정렬 = O(nlogn) + O(mlogn)
 
 ---
 
-[//]: # ()
-# Approach 2 
+# Approach 2 ❌
 1. query를 순회하며 조건을 분리한다.
 2. 각각의 조건(언어, 직군, 경력, 소울푸드, 점수)에 맞는 사람들의 index를 Set에 저장한다.
 3. 각각의 조건에 맞는 사람들의 index를 교집합하여 결과를 반환한다.
 
 시간복잡도 \
 query의 길이 m X info의 길이 n X 5(조건의 수) = 5mn
+
+# Approach 3 ❌
+1. info를 순회하며 조건을 분리한다.
+2. 분리된 조건을 key로 하고 점수를 value 리스트로 하는 Map을 만든다. 기존에 있는 key라면 value를 List에 추가한다.
+3. Map을 순회하며 value를 정렬한다.
+4. query를 순회하며 조건을 분리한다.
+5. query의 조건을 key로 Map에서 찾아 value의 점수 중 X이상인 사람을 찾는다. 이때, -는 모든 조건을 만족한다.
+시간복잡도 \
+query의 길이 m X info의 길이 n X 5(조건의 수) = 5mn
+
 [//]: # ()
 [//]: # (### 결론)
 
