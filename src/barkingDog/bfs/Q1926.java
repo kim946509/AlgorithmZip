@@ -7,53 +7,52 @@ import java.util.Scanner;
 
 public class Q1926 {
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int width = sc.nextInt();
-        int height = sc.nextInt();
-        int[][] board = new int[width][height];
-        int[][] visit = new int[width][height];
-
-        for(int i=0;i<board.length;i++){
-            for(int j=0;j<board[i].length;j++){
-                board[i][j]=sc.nextInt();
-            }
-        }
-
-        //우,상,좌,하 이동을 위한 변수
-        int[] dx = {1,0,-1,0};
-        int[] dy = {0,1,0,-1};
-
-        // bfs를 위한 Queue
-        Queue<Point> queue = new ArrayDeque<>();
-
-        //한점씩 방문
-        for(int y=0;y<board.length;y++) {
-            for (int x = 0; x < board[y].length; x++) {
-                if(board[y][x]==0 || visit[y][x]==1){
-                    continue;
-                }
-                visit[y][x]=1;
-                int count=1;
-                queue.add(new Point(x,y));
-                while(!queue.isEmpty()){
-                    Point p = queue.poll();
-                    for(int i=0;i<4;i++){
-                       Point nextP = new Point(p.x+dx[i],p.y+dy[i]);
-
-                       // board 범위를 벗어났을 경우 continue;
-                       if(nextP.x<0 || nextP.x>=width || nextP.y<0 || nextP.y>=height){
+       Scanner sc = new Scanner(System.in);
+       int height = sc.nextInt();
+       int width = sc.nextInt();
+       int[][] board = new int[height][width];
+       for(int i=0;i< board.length;i++){
+           for(int j=0;j<board[i].length;j++){
+               board[i][j]=sc.nextInt();
+           }
+       }
+       int[] dx = {1,0,-1,0};
+       int[] dy = {0,1,0,-1};
+       int maxSize = 0;
+       int count = 0;
+       Queue<Point> queue = new ArrayDeque<>();
+       int[][] isVisit = new int[height][width];
+       for(int i=0;i<height;i++) {
+           for(int j=0;j<width;j++) {
+               if(isVisit[i][j]==1 || board[i][j]==0)
+                   continue;
+               count++;
+               queue.add(new Point(j,i));
+               isVisit[i][j]=1;
+               int size = 1;
+               while (!queue.isEmpty()) {
+                   Point p = queue.poll();
+                   for (int dir = 0; dir < 4; dir++) {
+                       int nx = p.x + dx[dir];
+                       int ny = p.y + dy[dir];
+                       if (nx < 0 || nx >= width || ny < 0 || ny >= height) {
                            continue;
                        }
-                       // 만약 막힌 곳이거나 이미 방문했을경우 continue;
-                       if(board[nextP.y][nextP.x]==0 || visit[nextP.y][nextP.x]==1){
+                       if (isVisit[ny][nx] == 1 || board[ny][nx] == 0) {
                            continue;
                        }
+                       queue.add(new Point(nx, ny));
+                       isVisit[ny][nx] = 1;
+                       size++;
+                   }
+               }
+               if(maxSize<size){
+                   maxSize=size;
+               }
+           }
+       }
+       System.out.println(count);
+       System.out.println(maxSize);
 
-                       count++;
-
-                    }
-                }
-            }
-        }
     }
 }
