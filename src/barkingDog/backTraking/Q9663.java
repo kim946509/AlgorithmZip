@@ -1,8 +1,9 @@
+package barkingDog.backTraking;
 
 import java.io.IOException;
 import java.util.Scanner;
 
-class Main {
+public class Q9663 {
 
     // 놓을수있는자리 0, 놓을 수 없는 자리는 1
     private static int[][] board;
