@@ -1,42 +1,33 @@
+package barkingDog.backTraking;
+
 import java.io.IOException;
 import java.util.*;
 import java.io.*;
 
 class Main {
-    private static List<Integer> numbers = new ArrayList<>();
-    private static List<Integer> pocket = new ArrayList<>();
-    private static Set<List<Integer>> pockets = new HashSet<>();
+
     private static int n;
     private static int m;
-    private static boolean[] visited;
+    private static Set<List<Integer>> pockets = new HashSet<>();
     private static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+    private static List<Integer> numbers = new ArrayList<>();
 
-    private static void sequence() throws IOException {
+    private static void sequence(int cur, List<Integer> pocket) throws IOException {
         if (pocket.size() == m) {
             if (!pockets.contains(pocket)) {
+                pockets.add(pocket);
                 for (int num : pocket) {
                     bw.write(num + " ");
                 }
                 bw.write("\n");
-                pockets.add(pocket);
             }
-
             return;
         }
 
-        for (int i = 0; i < n; i++) {
-
-            if (visited[i] == true) {
-                continue;
-            }
-
-            visited[i] = true;
+        for (int i = cur; i < n; i++) {
             pocket.add(numbers.get(i));
-
-            sequence();
-
+            sequence(i + 1, pocket);
             pocket.remove(pocket.size() - 1);
-            visited[i] = false;
         }
     }
 
@@ -46,14 +37,17 @@ class Main {
         StringTokenizer st = new StringTokenizer(s);
         n = Integer.parseInt(st.nextToken());
         m = Integer.parseInt(st.nextToken());
-        visited = new boolean[n];
+
+        numbers = new ArrayList<>();
         s = br.readLine();
         st = new StringTokenizer(s);
+
         for (int i = 0; i < n; i++) {
             numbers.add(Integer.parseInt(st.nextToken()));
         }
+
         numbers.sort(Comparator.naturalOrder());
-        sequence();
+        sequence(0, new ArrayList<Integer>());
         bw.flush();
     }
 }
