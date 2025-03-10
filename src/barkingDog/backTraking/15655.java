@@ -1,3 +1,5 @@
+package barkingDog.backTraking;
+
 import java.io.IOException;
 import java.util.*;
 import java.io.*;
