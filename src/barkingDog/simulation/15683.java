@@ -1,3 +1,5 @@
+package barkingDog.simulation;
+
 import java.io.IOException;
 import java.util.*;
 import java.awt.Point;
